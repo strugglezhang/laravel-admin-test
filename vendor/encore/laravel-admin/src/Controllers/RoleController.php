@@ -96,7 +96,6 @@ class RoleController extends AdminController
 
         $form->display('created_at', trans('admin.created_at'));
         $form->display('updated_at', trans('admin.updated_at'));
-
         return $form;
     }
 }
