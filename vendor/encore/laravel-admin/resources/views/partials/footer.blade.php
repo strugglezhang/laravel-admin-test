@@ -14,5 +14,5 @@
 
     </div>
     <!-- Default to the left -->
-    <strong>Powered by <a href="https://github.com/z-song/laravel-admin" target="_blank">laravel-admin</a></strong>
+    <strong>战略合作伙伴 <a href="http://www.baidu.com" target="_blank">百度</a></strong>
 </footer>

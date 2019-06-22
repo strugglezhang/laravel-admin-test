@@ -13,10 +13,10 @@ class HomeController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->title('Dashboard')
-            ->description('Description...')
-            ->row(Dashboard::title())
-            ->row(function (Row $row) {
+            ->title(' 欢迎界面')
+            ->description('欢迎光临')
+            ->row(  view('title'))  ;
+            /**->row(function (Row $row) {
 
                 $row->column(4, function (Column $column) {
                     $column->append(Dashboard::environment());
@@ -29,6 +29,6 @@ class HomeController extends Controller
                 $row->column(4, function (Column $column) {
                     $column->append(Dashboard::dependencies());
                 });
-            });
+            })***/;
     }
 }
