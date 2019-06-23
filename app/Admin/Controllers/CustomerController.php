@@ -26,13 +26,13 @@ class CustomerController extends Controller
     {
         $grid = new Grid(new Customer);
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('phone', __('Phone'));
-        $grid->column('contact', __('Contact'));
-        $grid->column('id_card', __('Id card'));
-        $grid->column('card', __('Card'));
-        $grid->column('address', __('Address'));
+        $grid->column('id', '客户id');
+        $grid->column('name','客户名称');
+        $grid->column('phone', '客户手机号');
+        $grid->column('contact', '其他联系方式');
+        $grid->column('id_card','身份证号');
+        $grid->column('card', '银行卡号');
+        $grid->column('address','联系地址');
         $grid->column('create_id', __('Create id'));
         $grid->column('create_name', __('Create name'));
         $grid->column('create_time', __('Create time'));

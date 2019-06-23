@@ -26,12 +26,12 @@ class ProductController extends Controller
     {
         $grid = new Grid(new Rroduct);
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('price', __('Price'));
-        $grid->column('total', __('Total'));
-        $grid->column('number', __('Number'));
-        $grid->column('desc', __('Desc'));
+        $grid->column('id', '产品id');
+        $grid->column('name','产品名称');
+        $grid->column('price', '产品单价');
+        $grid->column('total', '产品总额');
+        $grid->column('number', '产品数量');
+        $grid->column('desc','产品数量');
         $grid->column('create_time', __('Create time'));
         $grid->column('create_name', __('Create name'));
         $grid->column('create_id', __('Create id'));

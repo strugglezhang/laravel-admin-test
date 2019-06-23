@@ -28,13 +28,13 @@ class CompanyController extends Controller
 
         $grid->column('id', __('Id'));
         $grid->column('name', '客户名称');
-        $grid->column('address', __('Address'));
-        $grid->column('contact', __('Contact'));
-        $grid->column('charge', __('Charge'));
-        $grid->column('create_time', __('Create time'));
-        $grid->column('create_user', __('Create user'));
-        $grid->column('create_id', __('Create id'));
-        $grid->column('add_time', __('Add time'));
+        $grid->column('address','客户地址');
+        $grid->column('contact','联系方式');
+        $grid->column('charge', '负责人');
+        $grid->column('create_time','数据创建时间');
+        $grid->column('create_user','数据创建人');
+        $grid->column('create_id', '数据创建者id');
+        $grid->column('add_time','公司创建时间');
         $grid->disableExport();
         $grid->disableColumnSelector();
 
