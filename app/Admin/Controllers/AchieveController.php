@@ -25,21 +25,21 @@ class AchieveController extends Controller
     {
         $grid = new Grid(new Achieve);
 
-        $grid->column('id', __('Id'));
-        $grid->column('salesman', __('Salesman'));
-        $grid->column('product', __('Product'));
-        $grid->column('product_id', __('Product id'));
-        $grid->column('price', __('Price'));
-        $grid->column('customer', __('Customer'));
-        $grid->column('phone', __('Phone'));
-        $grid->column('idcard', __('Idcard'));
-        $grid->column('card', __('Card'));
-        $grid->column('contact', __('Contact'));
-        $grid->column('sale_time', __('Sale time'));
+        $grid->column('id','Id');
+        $grid->column('salesman','客户经理');
+        $grid->column('product','所购产品');
+        $grid->column('product_id', '产品id');
+        $grid->column('price','产品单价');
+        $grid->column('customer', '客户名称');
+        $grid->column('phone', '手机号');
+        $grid->column('idcard', '身份证号');
+        $grid->column('card', '银行卡号');
+        $grid->column('contact', '其他联系方式');
+        $grid->column('sale_time','售出时间');
+        $grid->column('number', __('购买数量'));
+        $grid->column('saleman_id', __('Saleman id'));
         $grid->column('create_time', __('Create time'));
         $grid->column('term', __('Term'));
-        $grid->column('saleman_id', __('Saleman id'));
-        $grid->column('number', __('Number'));
         $grid->disableExport();
         $grid->disableColumnSelector();
 
