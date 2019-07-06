@@ -6,8 +6,8 @@
 
     use Illuminate\Database\Eloquent\Model;
 
-    class RolesUser extends Model
+    class Roles extends Model
     {
-        protected $table = 'admin_role_users';
+        protected $table = 'admin_roles';
         public $timestamps = false;
     }

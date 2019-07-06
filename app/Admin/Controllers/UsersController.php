@@ -47,7 +47,8 @@
                     $actions->disableDelete();
                 });
             });
-
+            $grid->disableExport();
+            $grid->disableColumnSelector();
             return $grid;
         }
 
@@ -75,7 +76,9 @@
             })->label();
             $show->field('created_at', trans('admin.created_at'));
             $show->field('updated_at', trans('admin.updated_at'));
-
+            $show->panel()->tools(function (Show\Tools $tools) {
+                $tools->disableDelete();
+            });
             return $show;
         }
 
@@ -111,11 +114,9 @@
             $form->ignore(['password_confirmation']);
             $form->select("company", "所属公司")->options(Company::all()->pluck('name', 'id'));
 
-            $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
-            $superior =  $userModel::all()->pluck('name', 'id');
-            $superior[0] = "无汇报人";
-            $form->select("superior", "汇报人")->options($superior);
-            $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
+            $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'))->load('superior','/api/ajax/superior');
+            $form->select("superior", "汇报人")->options();
+//            $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
 
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));
@@ -126,6 +127,11 @@
                 }
             });
 
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableDelete();
+                $tools->disableView();
+
+            });
             return $form;
         }
 

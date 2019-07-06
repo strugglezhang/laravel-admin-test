@@ -26,7 +26,7 @@
 </style>
 
 <div class="title">
-   有请董事会宋老板!!!
+   天骄管理后台
 </div>
 <div class="links">
 </div>

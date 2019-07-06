@@ -3,9 +3,15 @@
     namespace App\Admin\Controllers;
 
     use App\Models\Achieve;
+    use App\Models\Customer;
+    use App\Models\Product;
+    use App\Models\Roles;
+    use App\Models\RolesUser;
+    use App\Models\User;
     use Encore\Admin\Form;
     use Encore\Admin\Grid;
     use Encore\Admin\Show;
+    use Illuminate\Support\Facades\Auth;
 
     class AchieveController extends Controller
     {
@@ -24,22 +30,32 @@
         protected function grid()
         {
             $grid = new Grid(new Achieve);
+            $userInfo = Auth::guard('admin')->user()->toArray();
+            $roleIdInfo = RolesUser::where('user_id', $userInfo['id'])->first()->toArray();
+            $roleInfo = Roles::where('id', $roleIdInfo['user_id'])->first()->toArray();
+            if (isset($roleInfo)) {
+                if ($roleInfo['slug'] == 'companies') {
+                    $grid->model()->where('company', $userInfo['company']);
+                } elseif ($roleInfo['slug'] == 'customer') {
+                    $grid->model()->where('saleman_id', $userInfo['id']);
+                } elseif ($roleInfo['slug'] == 'businiess') {
+                    $child = User::where('', $userInfo['id'])->pluck('id');
+                    $grid->model()->whereIn('saleman_id', $child)
+                        ->orWhere('saleman_id',$userInfo['id']);
+                }
+            }
 
             $grid->column('id', 'Id');
+            $grid->filter(function ($filter) {
+                $filter->between('sale_time', '售出时间')->datetime();
+            });
             $grid->column('salesman', '销售者');
             $grid->column('product', '所购产品');
             $grid->column('product_id', '产品id');
-            $grid->column('price', '产品单价');
+            $grid->column('price', '售出金额');
             $grid->column('customer', '客户名称');
             $grid->column('phone', '手机号');
-            $grid->column('idcard', '身份证号');
-            $grid->column('card', '银行卡号');
-            $grid->column('contact', '其他联系方式');
             $grid->column('sale_time', '售出时间');
-            $grid->column('number', __('购买数量'));
-            $grid->column('saleman_id', __('Saleman id'));
-            $grid->column('create_time', __('Create time'));
-            $grid->column('term', __('Term'));
             $grid->disableExport();
             $grid->disableColumnSelector();
 
@@ -56,22 +72,21 @@
         {
             $show = new Show(Achieve::findOrFail($id));
 
-            $show->field('id', __('Id'));
-            $show->field('salesman', __('Salesman'));
-            $show->field('product', __('Product'));
-            $show->field('product_id', __('Product id'));
-            $show->field('price', __('Price'));
-            $show->field('customer', __('Customer'));
-            $show->field('phone', __('Phone'));
-            $show->field('idcard', __('Idcard'));
-            $show->field('card', __('Card'));
-            $show->field('contact', __('Contact'));
-            $show->field('sale_time', __('Sale time'));
-            $show->field('create_time', __('Create time'));
-            $show->field('term', __('Term'));
-            $show->field('saleman_id', __('Saleman id'));
-            $show->field('number', __('Number'));
-
+            $show->field('id', 'Id');
+            $show->field('salesman', '销售者');
+            $show->field('saleman_id', '销售者Id');
+            $show->field('product', '所购产品');
+            $show->field('product_id', '产品Id');
+            $show->field('price', '售出金额');
+            $show->field('customer', '客户名称');
+            $show->field('phone', '手机号');
+            $show->field('idcard', '身份证号');
+            $show->field('card', '银行卡号');
+            $show->field('contact', '其他联系方式');
+            $show->field('sale_time', '售出时间');
+            $show->panel()->tools(function (Show\Tools $tools) {
+                $tools->disableDelete();
+            });
             return $show;
         }
 
@@ -82,32 +97,61 @@
          */
         protected function form()
         {
+            $userInfo = Auth::guard('admin')->user()->toArray();
+            $userModel = config('admin.database.users_model');
             $form = new Form(new Achieve);
-
-            $form->text('salesman', __('Salesman'));
-            $form->text('product', __('Product'));
-            $form->number('product_id', __('Product id'));
-            $form->decimal('price', __('Price'));
-            $form->text('customer', __('Customer'));
-            $form->mobile('phone', __('Phone'));
-            $form->text('idcard', __('Idcard'));
-            $form->text('card', __('Card'));
-            $form->text('contact', __('Contact'));
-            $form->datetime('sale_time', __('Sale time'))->default(date('Y-m-d H:i:s'));
-            $form->datetime('create_time', __('Create time'))->default(date('Y-m-d H:i:s'));
-            $form->text('term', __('Term'));
-            $form->number('saleman_id', __('Saleman id'));
-            $form->number('number', __('Number'));
+            $form->select("saleman_id", "销售者")->options($userModel::all()->pluck('name', 'id'));
+            $form->select("product_id", "产品")->options(Product::all()->pluck('name', 'id'));
+            $form->decimal('price', '销售金额');
+            $form->text('customer', '客户名称');
+            $form->mobile('phone', '客户电话');
+            $form->text('idcard', '身份证号');
+            $form->text('card', '客户银行卡号');
+            $form->text('contact', '其他联系方式');
+            $form->datetime('sale_time', '销售时间')->default(date('Y-m-d H:i:s'));
+            $form->model()->create_time = date("Y-m-d H:i:s");
             $form->footer(function ($footer) {
-                // 去掉`查看`checkbox
                 $footer->disableViewCheck();
-
-                // 去掉`继续编辑`checkbox
                 $footer->disableEditingCheck();
-
-                // 去掉`继续创建`checkbox
                 $footer->disableCreatingCheck();
+                $footer->disableReset();
 
+            });
+
+            // 组合表单数据
+            $form->submitted(function (Form $form) use ($userModel) {
+                if (!empty($_POST['saleman_id'])) {
+                    $product = Product::where('id', $_POST['product_id'])->first()->toArray();
+                    $form->model()->product = $product['name'];
+                }
+
+                if (!empty($_POST['product_id'])) {
+                    $userInfo = $userModel::where('id', $_POST['saleman_id'])->first()->toArray();
+                    $form->model()->salesman = $userInfo['name'];
+                }
+
+                $form->model()->company = $userInfo['company'];
+            });
+
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableDelete();
+                $tools->disableView();
+
+            });
+
+
+            // 保存客户信息
+            $form->saved(function (Form $form) use ($userInfo) {
+                $model = new Customer();
+                $model->name = $form->model()->customer;
+                $model->phone = $form->model()->phone;
+                $model->contact = $form->model()->contact;
+                $model->id_card = $form->model()->idcard;
+                $model->card = $form->model()->card;
+                $model->create_id = $userInfo['id'];
+                $model->create_name = $userInfo['name'];
+                $model->create_time = date("Y-m-d H:i:s");
+                $model->save();
             });
             return $form;
         }

@@ -58,7 +58,9 @@ namespace App\Admin\Controllers;
             $show->field('contact', '公司联系方式');
             $show->field('charge', '负责人');
             $show->field('add_time', '公司创建时间');
-
+            $show->panel()->tools(function (Show\Tools $tools) {
+                $tools->disableDelete();
+            });
             return $show;
         }
 
@@ -92,6 +94,12 @@ namespace App\Admin\Controllers;
 
                 // 去掉`继续创建`checkbox
                 $footer->disableCreatingCheck();
+
+            });
+
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableDelete();
+                $tools->disableView();
 
             });
             return $form;

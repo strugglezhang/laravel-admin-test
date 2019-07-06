@@ -27,7 +27,9 @@
         protected function grid()
         {
             $grid = new Grid(new Rroduct);
-
+            $grid->filter(function ($filter) {
+                $filter->between('create_name', '创建时间')->datetime();
+            });
             $grid->column('id', '产品id');
             $grid->column('name', '产品名称');
             $grid->column('price', '产品余额');
@@ -57,7 +59,9 @@
             $show->field('desc', '产品描述');
             $show->field('create_time', '创建时间');
             $show->field('create_name', '创建人');
-
+            $show->panel()->tools(function (Show\Tools $tools) {
+                $tools->disableDelete();
+            });
             return $show;
         }
 
@@ -90,6 +94,12 @@
 
                 // 去掉`继续创建`checkbox
                 $footer->disableCreatingCheck();
+
+            });
+
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableDelete();
+                $tools->disableView();
 
             });
             return $form;
