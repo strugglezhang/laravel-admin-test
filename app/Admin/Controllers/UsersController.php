@@ -114,8 +114,8 @@
             $form->ignore(['password_confirmation']);
             $form->select("company", "所属公司")->options(Company::all()->pluck('name', 'id'));
 
-            $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'))->load('superior','/api/ajax/superior');
-            $form->select("superior", "汇报人")->options();
+            $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));//->load('superior','/api/ajax/superior');
+            $form->select("superior", "汇报人")->options($userModel::all()->pluck('name', 'id'));
 //            $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
 
             $form->display('created_at', trans('admin.created_at'));
