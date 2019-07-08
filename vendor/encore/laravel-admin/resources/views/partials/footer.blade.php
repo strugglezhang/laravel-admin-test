@@ -13,6 +13,5 @@
         @endif
 
     </div>
-    <!-- Default to the left -->
     <strong>战略合作伙伴 <a href="http://www.baidu.com" target="_blank">百度</a></strong>
 </footer>
