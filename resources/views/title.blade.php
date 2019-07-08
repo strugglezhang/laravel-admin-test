@@ -26,7 +26,7 @@
 </style>
 
 <div class="title">
-   天骄管理后台
+   天交管理后台
 </div>
 <div class="links">
 </div>

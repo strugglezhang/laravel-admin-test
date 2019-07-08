@@ -13,7 +13,7 @@ class HomeController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->title('天骄后台')
+            ->title('天交后台')
             ->description('欢迎光临')
             ->row(  view('title'))  ;
             /**->row(function (Row $row) {
