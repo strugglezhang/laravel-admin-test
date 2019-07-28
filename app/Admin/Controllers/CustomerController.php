@@ -74,12 +74,12 @@
         {
             $form = new Form(new Customer);
 
-            $form->text('name', __('Name'));
-            $form->mobile('phone', __('Phone'));
-            $form->text('contact', __('Contact'));
-            $form->text('id_card', __('Id card'));
-            $form->text('card', __('Card'));
-            $form->text('address', __('Address'));
+            $form->text('name', '客户名称');
+            $form->mobile('phone', '客户电话');
+            $form->text('contact', '其他联系方式');
+            $form->text('id_card','身份证号');
+            $form->text('card', '银行卡号');
+            $form->text('address','联系地址');
             $form->number('create_id', __('Create id'));
             $form->text('create_name', __('Create name'));
             $form->datetime('create_time', __('Create time'))->default(date('Y-m-d H:i:s'));
