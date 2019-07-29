@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Controllers;
+    namespace App\Admin\Controllers;
 
     use App\Models\Company;
     use Encore\Admin\Controllers\AdminController;
@@ -28,13 +28,12 @@ namespace App\Admin\Controllers;
         {
             $grid = new Grid(new Company());
             $grid->id('ID')->sortable();
-            $grid->model()->orderBy("id","DESC");
+            $grid->model()->orderBy("id", "DESC");
             $grid->column('id', __('Id'));
-            $grid->column('name', '客户名称');
-            $grid->column('address', '客户地址');
+            $grid->column('name', '公司名称');
+            $grid->column('address', '公司地址');
             $grid->column('contact', '联系方式');
             $grid->column('charge', '负责人');
-            $grid->column('create_user', '数据创建人');
             $grid->column('add_time', '公司创建时间');
             $grid->disableExport();
             $grid->disableColumnSelector();
@@ -78,7 +77,7 @@ namespace App\Admin\Controllers;
             $form->text('address', '公司地址');
             $form->text('contact', '公司联系方式');
             $form->text('charge', '公司负责人');
-            $form->datetime('create_time', '公司创建时间')->default(date('Y-m-d H:i:s'));
+            $form->datetime('add_time', '公司创建时间');
             $form->model()->create_time = date("Y-m-d H:i:s");
             $form->model()->create_id = $userInfo['id'];
             $form->footer(function ($footer) {

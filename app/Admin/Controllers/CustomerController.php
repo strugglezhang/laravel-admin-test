@@ -49,16 +49,12 @@
         {
             $show = new Show(Customer::findOrFail($id));
 
-            $show->field('id', __('Id'));
-            $show->field('name', __('Name'));
-            $show->field('phone', __('Phone'));
-            $show->field('contact', __('Contact'));
-            $show->field('id_card', __('Id card'));
-            $show->field('card', __('Card'));
-            $show->field('address', __('Address'));
-            $show->field('create_id', __('Create id'));
-            $show->field('create_name', __('Create name'));
-            $show->field('create_time', __('Create time'));
+            $show->field('name', '客户名称');
+            $show->field('phone', '客户手机号');
+            $show->field('contact', '其他联系方式');
+            $show->field('id_card', '身份证号');
+            $show->field('card', '银行卡号');
+            $show->field('address', '联系地址');
             $show->panel()->tools(function (Show\Tools $tools) {
                 $tools->disableDelete();
             });
@@ -77,9 +73,9 @@
             $form->text('name', '客户名称');
             $form->mobile('phone', '客户电话');
             $form->text('contact', '其他联系方式');
-            $form->text('id_card','身份证号');
+            $form->text('id_card', '身份证号');
             $form->text('card', '银行卡号');
-            $form->text('address','联系地址');
+            $form->text('address', '联系地址');
             $form->number('create_id', __('Create id'));
             $form->text('create_name', __('Create name'));
             $form->datetime('create_time', __('Create time'))->default(date('Y-m-d H:i:s'));

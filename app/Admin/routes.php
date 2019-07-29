@@ -17,6 +17,7 @@
         $router->resource('achieves', AchieveController::class);
         $router->resource('customers', CustomerController::class);
         $router->resource('users', UsersController::class);
+        $router->resource('staff', StaffController::class);
     });
 
 

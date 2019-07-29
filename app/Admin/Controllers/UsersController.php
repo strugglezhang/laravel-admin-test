@@ -29,7 +29,6 @@
 
             $grid = new Grid(new $userModel());
 
-            $grid->column('id', 'ID')->sortable();
             $grid->column('username', trans('admin.username'));
             $grid->column('name', trans('admin.name'));
             $grid->column('roles', trans('admin.roles'))->pluck('name')->label();
@@ -65,7 +64,6 @@
 
             $show = new Show($userModel::findOrFail($id));
 
-            $show->field('id', 'ID');
             $show->field('username', trans('admin.username'));
             $show->field('name', trans('admin.name'));
             $show->field('roles', trans('admin.roles'))->as(function ($roles) {
@@ -91,7 +89,6 @@
         {
 
             $userModel = config('admin.database.users_model');
-            $permissionModel = config('admin.database.permissions_model');
             $roleModel = config('admin.database.roles_model');
 
             $form = new Form(new $userModel());
@@ -115,7 +112,7 @@
             $form->select("company", "所属公司")->options(Company::all()->pluck('name', 'id'));
 
             $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));//->load('superior','/api/ajax/superior');
-            $form->select("superior", "汇报人")->options($userModel::all()->pluck('name', 'id'));
+//            $form->select("superior", "汇报人")->options($userModel::all()->pluck('name', 'id'));
 //            $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
 
             $form->display('created_at', trans('admin.created_at'));

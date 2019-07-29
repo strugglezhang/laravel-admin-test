@@ -16,19 +16,5 @@ class HomeController extends Controller
             ->title('天交后台')
             ->description('欢迎光临')
             ->row(  view('title'))  ;
-            /**->row(function (Row $row) {
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
-            })***/;
     }
 }
