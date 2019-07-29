@@ -36,7 +36,7 @@
                 $filter->like('salesman', '销售者');
             });
 
-            $grid->column('salesman', '销售者');
+            $grid->column('salesman', '客户经理');
             $grid->column('product', '所购产品');
             $grid->column('price', '售出金额');
             $grid->column('customer', '客户名称');
@@ -59,7 +59,7 @@
             $show = new Show(Achieve::findOrFail($id));
 
             $show->field('id', 'Id');
-            $show->field('salesman', '销售者');
+            $show->field('salesman', '客户经理');
             $show->field('saleman_id', '销售者Id');
             $show->field('product', '所购产品');
             $show->field('product_id', '产品Id');
