@@ -38,6 +38,7 @@
 
             $grid->column('salesman', '客户经理');
             $grid->column('product', '所购产品');
+            $grid->column('contract', '合同编号');
             $grid->column('price', '售出金额');
             $grid->column('customer', '客户名称');
             $grid->column('phone', '手机号');
@@ -63,6 +64,7 @@
             $show->field('saleman_id', '销售者Id');
             $show->field('product', '所购产品');
             $show->field('product_id', '产品Id');
+            $show->field('contract', '合同编号');
             $show->field('price', '售出金额');
             $show->field('customer', '客户名称');
             $show->field('phone', '手机号');
@@ -93,6 +95,7 @@
             $form->mobile('phone', '客户电话');
             $form->text('idcard', '身份证号');
             $form->text('card', '客户银行卡号');
+            $form->text('contract', '合同编号');
             $form->text('contact', '其他联系方式');
             $form->datetime('sale_time', '销售时间')->default(date('Y-m-d H:i:s'));
             $form->model()->create_time = date("Y-m-d H:i:s");
